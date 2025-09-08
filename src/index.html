@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Практика 3 — Форма в модалке</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <main class="container">
+    <h1>Обратная связь</h1>
+    <p>Нажмите, чтобы открыть форму:</p>
+    <button id="openDialog" type="button" class="btn-primary">Написать нам</button>
+
+    <!-- Невизуальное «живое» поле для сообщения об успехе -->
+    <p id="successNotice" class="visually-hidden" role="status" aria-live="polite"></p>
+  </main>
+
+  <!-- Модалка с формой (вариант A — нативный <dialog>) -->
+  <!-- Основано на примере из раздела 1.3.1: showModal(), ::backdrop, закрытие по Esc :contentReference[oaicite:1]{index=1} -->
+  <dialog id="contactDialog" aria-labelledby="dialogTitle">
+    <form id="contactForm" method="dialog" novalidate>
+      <h2 id="dialogTitle">Напишите нам</h2>
+
+      <fieldset>
+        <legend class="visually-hidden">Поля формы обратной связи</legend>
+
+        <label for="name">Имя</label>
+        <input id="name" name="name" type="text" required minlength="2" autocomplete="given-name"
+               aria-describedby="nameHelp" />
+        <small id="nameHelp" class="help">Минимум 2 символа</small>
+
+        <label for="email">E-mail</label>
+        <input id="email" name="email" type="email" required autocomplete="email"
+               aria-describedby="emailHelp" />
+        <small id="emailHelp" class="help">Например: name@example.com</small>
+
+        <label for="phone">Телефон</label>
+        <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+               placeholder="+7 (___) ___-__-__"
+               required
+               pattern="^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$"
+               aria-describedby="phoneHelp phoneFormat" />
+        <small id="phoneHelp" class="help">Формат: +7 (900) 000-00-00</small>
+        <small id="phoneFormat" class="help">Ввод форматируется автоматически (лёгкая маска) — см. п. 1.4.3 :contentReference[oaicite:2]{index=2}</small>
+
+        <label for="date">Дата</label>
+        <input id="date" name="date" type="date" aria-describedby="dateHelp" />
+        <small id="dateHelp" class="help">Необязательное поле</small>
+
+        <label for="topic">Тема</label>
+        <select id="topic" name="topic" required aria-describedby="topicHelp">
+          <option value="">Выберите тему</option>
+          <option>Вопрос</option>
+          <option>Заказ</option>
+          <option>Предложение</option>
+        </select>
+        <small id="topicHelp" class="help">Пожалуйста, выберите подходящую тему</small>
+
+        <label for="message">Сообщение</label>
+        <textarea id="message" name="message" rows="4" required aria-describedby="messageHelp"></textarea>
+        <small id="messageHelp" class="help">Минимум одно-два предложения</small>
+      </fieldset>
+
+      <div class="form-actions">
+        <button type="button" id="closeDialog" class="btn-secondary">Закрыть</button>
+        <button type="submit" class="btn-primary">Отправить</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
